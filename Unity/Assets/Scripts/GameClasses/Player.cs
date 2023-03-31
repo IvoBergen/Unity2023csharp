@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 
 public class Player
@@ -22,8 +23,17 @@ public class Player
         {
             for (int i2 = 0; i2 < path[i].Length; i2++)
             {
-                ???
+                Tile t = path[i][i2] ;
 
+                if (t.block)
+                {
+                    if(newPos.x == t.gameObject.transform.position.x && newPos.z == t.gameObject.transform.position.z)
+                    {
+                        return false;
+                    }
+                    
+                }
+                
                 //1) Pak hier eerst de huidige Tile die in [i][i2] zit
                 //2) check met een if of het de Tile een tower is
                 //3) vergelijk de newPos met de transform.position van de Tile
@@ -36,7 +46,7 @@ public class Player
     }
     public void Move(Vector3 newPos, Tile[][] path)
     {
-        Debug.Log("======move");
+        Debug.Log("======move" +newPos);
         if (CanMoveTo(newPos, path))
         {
             Debug.Log("======CanMoveTo");
@@ -46,7 +56,27 @@ public class Player
     public void DoMove(Tile[][] path)
     {
         Vector3 newPos = obj.transform.position;
-        ???
+
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            newPos.z += 2;
+            Move(newPos, path);
+        }
+        if(Input.GetKeyDown(KeyCode.A))
+        {
+            newPos.x -= 2;
+            Move(newPos, path);
+        }
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            newPos.z -= 2;
+            Move(newPos, path);
+        }
+        if(Input.GetKeyDown(KeyCode.D))
+        {
+            newPos.x += 2;
+            Move(newPos, path);
+        }
         //kijk hier welke of de speler up,down,left of right ingedrukt heeft
         
             //Tip: alle tiles zijn 2x bij 2z
